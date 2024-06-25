@@ -1,8 +1,9 @@
 import { PageNotFoundError } from "next/dist/shared/lib/utils"
+import { notFound } from "next/navigation"
 
 export const dynamicParams = true
 
- export const generateStaticParams = async () => {
+export const generateStaticParams = async () => {
     const res = await fetch('http://localhost:4000/tickets')
 
     const tickets = await res.json()
@@ -13,6 +14,9 @@ export const dynamicParams = true
 }
 
 const getTicket = async (id) => {
+    // imitate delay
+    await new Promise(resolve => setTimeout(resolve, 3000))
+
     const res = await fetch(`http://localhost:4000/tickets/${id}`, {
         next: {
             revalidate: 60
@@ -20,7 +24,7 @@ const getTicket = async (id) => {
     })
 
     if (!res.ok) {
-        PageNotFoundError()
+        notFound()
     }
 
     return res.json()

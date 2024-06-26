@@ -1,4 +1,3 @@
-import { PageNotFoundError } from "next/dist/shared/lib/utils"
 import { notFound } from "next/navigation"
 
 export const dynamicParams = true
